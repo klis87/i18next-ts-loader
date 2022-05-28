@@ -35,7 +35,6 @@ const getI18nTypes = (obj, prefix) => {
       return [normalizedK, prefix + normalizedK];
     }
 
-
     return [k, getI18nTypes(v, `${prefix}${k}.`)];
   });
 };
@@ -69,8 +68,13 @@ function plugin(source) {
     `,
   );
 
-  languages.forEach(language => {
-    fs.mkdirSync(path.dirname(`${this.rootContext}/locales/${language}/${relativePath}.json`), { recursive: true })
+  languages.forEach((language) => {
+    fs.mkdirSync(
+      path.dirname(
+        `${this.rootContext}/locales/${language}/${relativePath}.json`,
+      ),
+      { recursive: true },
+    );
     fs.writeFileSync(
       `${this.rootContext}/locales/${language}/${relativePath}.json`,
       JSON.stringify(json[language]),

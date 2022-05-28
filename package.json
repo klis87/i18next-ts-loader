@@ -13,5 +13,8 @@
   "homepage": "https://github.com/klis87/i18next-ts-loader",
   "bugs": {
     "url": "https://github.com/klis87/i18next-ts-loader/issues"
+  },
+  "devDependencies": {
+    "prettier": "2.6.2"
   }
 }
