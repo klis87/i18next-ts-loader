@@ -18,25 +18,25 @@ const path = require('path');
 
 const mapObject = (obj, callback) =>
   Object.entries(obj).reduce((prev, [k, v]) => {
-    const newValue = callback(k, v);
+    const [newKey, newValue] = callback(k, v);
 
     if (newValue === undefined) {
       return prev;
     }
 
-    prev[k] = newValue;
+    prev[newKey] = newValue;
     return prev;
   }, {});
 
 const getI18nTypes = (obj, prefix) => {
   return mapObject(obj, (k, v) => {
-    const normalizedK = k.split('_')[0];
-
     if (typeof v === 'string') {
-      return prefix + normalizedK;
+      const normalizedK = k.split('_')[0];
+      return [normalizedK, prefix + normalizedK];
     }
 
-    return getI18nTypes(v, `${prefix}${normalizedK}.`);
+
+    return [k, getI18nTypes(v, `${prefix}${k}.`)];
   });
 };
 
