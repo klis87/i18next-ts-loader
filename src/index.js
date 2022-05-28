@@ -12,32 +12,10 @@ const path = require('path');
 // },
 // };
 
+const { getI18nTypes } = require('./utils');
+
 // TODO:
-// plural
 // hash
-
-const mapObject = (obj, callback) =>
-  Object.entries(obj).reduce((prev, [k, v]) => {
-    const [newKey, newValue] = callback(k, v);
-
-    if (newValue === undefined) {
-      return prev;
-    }
-
-    prev[newKey] = newValue;
-    return prev;
-  }, {});
-
-const getI18nTypes = (obj, prefix) => {
-  return mapObject(obj, (k, v) => {
-    if (typeof v === 'string') {
-      const normalizedK = k.split('_')[0];
-      return [normalizedK, prefix + normalizedK];
-    }
-
-    return [k, getI18nTypes(v, `${prefix}${k}.`)];
-  });
-};
 
 function plugin(source) {
   // const options = this.getOptions();
@@ -57,12 +35,12 @@ function plugin(source) {
     .replace('.i18n', '')
     .replaceAll('/', '_');
 
-  const response = getI18nTypes(json[languages[0]], `${relativePath}:`);
+  const i18nTypes = getI18nTypes(json[languages[0]], `${relativePath}:`);
 
   fs.writeFileSync(
     `${this.resourcePath}.d.ts`,
     `declare const locales = ${JSON.stringify(
-      response,
+      i18nTypes,
     )} as const;export default locales;
     export const namespace = '${relativePath}' as const;
     `,
@@ -82,7 +60,7 @@ function plugin(source) {
   });
 
   return `export default ${JSON.stringify(
-    response,
+    i18nTypes,
   )};export const namespace = '${relativePath}'`;
 }
 
