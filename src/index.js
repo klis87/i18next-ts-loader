@@ -2,7 +2,7 @@
 // import { validate } from 'schema-utils';
 // const { stringifyRequest } = require('loader-utils');
 const fs = require('fs');
-
+const path = require('path');
 // const schema = {
 // type: 'object',
 // properties: {
@@ -70,6 +70,7 @@ function plugin(source) {
   );
 
   languages.forEach(language => {
+    fs.mkdirSync(path.dirname(`${this.rootContext}/locales/${language}/${relativePath}.json`), { recursive: true })
     fs.writeFileSync(
       `${this.rootContext}/locales/${language}/${relativePath}.json`,
       JSON.stringify(json[language]),
