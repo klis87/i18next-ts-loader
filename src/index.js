@@ -1,22 +1,18 @@
-// import { urlToRequest, stringifyRequest } from 'loader-utils';
 // import { validate } from 'schema-utils';
-// const { stringifyRequest } = require('loader-utils');
+const { interpolateName } = require('loader-utils');
 const fs = require('fs');
-const crypto = require('crypto');
 const path = require('path');
+
 // const schema = {
-// type: 'object',
-// properties: {
-// test: {
-// type: 'string',
-// },
-// },
+//   type: 'object',
+//   properties: {
+//     localeFilesPattern: {
+//       type: 'string',
+//     },
+//   },
 // };
 
-const { getI18nTypes } = require('./utils');
-
-// TODO:
-// hash
+const { getI18nTypes, getLocalePath } = require('./utils');
 
 function plugin(source) {
   // const options = this.getOptions();
@@ -28,18 +24,19 @@ function plugin(source) {
 
   const hashSum =
     this.mode === 'production'
-      ? crypto.createHash('sha256').update(source).digest('hex')
+      ? interpolateName(this, '[contenthash]', {
+          content: source,
+        })
       : null;
-
-  const json = JSON.parse(source);
-
-  const languages = Object.keys(json);
 
   const namespace = `${this.resourcePath
     .replace(this.rootContext, '')
     .slice(1)
     .replace('.i18n', '')
     .replaceAll('/', '_')}${hashSum ? `_${hashSum}` : ''}`;
+  const json = JSON.parse(source);
+
+  const languages = Object.keys(json);
 
   const i18nTypes = getI18nTypes(json[languages[0]], `${namespace}:`);
 
@@ -53,12 +50,13 @@ function plugin(source) {
   );
 
   languages.forEach((language) => {
-    fs.mkdirSync(
-      path.dirname(`${this.rootContext}/locales/${language}/${namespace}.json`),
-      { recursive: true },
-    );
+    const localePath = getLocalePath(language, namespace);
+
+    fs.mkdirSync(path.dirname(this.rootContext + localePath), {
+      recursive: true,
+    });
     fs.writeFileSync(
-      `${this.rootContext}/locales/${language}/${namespace}.json`,
+      this.rootContext + localePath,
       JSON.stringify(json[language]),
     );
   });

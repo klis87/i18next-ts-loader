@@ -20,5 +20,12 @@ const getI18nTypes = (obj, prefix) =>
     return [k, getI18nTypes(v, `${prefix}${k}.`)];
   });
 
+const getLocalePath = (
+  language,
+  namespace,
+  pattern = '/locales/{{lng}}/{{ns}}.json',
+) => pattern.replace('{{lng}}', language).replace('{{ns}}', namespace);
+
 exports.mapObject = mapObject;
 exports.getI18nTypes = getI18nTypes;
+exports.getLocalePath = getLocalePath;
