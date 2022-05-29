@@ -1,34 +1,20 @@
-// import { validate } from 'schema-utils';
 const { interpolateName } = require('loader-utils');
 const fs = require('fs');
 const path = require('path');
 
-// const schema = {
-//   type: 'object',
-//   properties: {
-//     localeFilesPattern: {
-//       type: 'string',
-//     },
-//   },
-// };
-
 const { getI18nTypes, getLocalePath } = require('./utils');
 
 function plugin(source) {
-  const { localeFilesPattern = '/locales/{{lng}}/{{ns}}.json' } =
-    this.getOptions();
+  const {
+    localeFilesPattern = '/locales/{{lng}}/{{ns}}.json',
+    addContentHash = this.mode === 'production',
+  } = this.getOptions();
 
-  // validate(schema, options, {
-  //   name: 'Example Loader',
-  //   baseDataPath: 'options',
-  // });
-
-  const hashSum =
-    this.mode === 'production'
-      ? interpolateName(this, '[contenthash]', {
-          content: source,
-        })
-      : null;
+  const hashSum = addContentHash
+    ? interpolateName(this, '[contenthash]', {
+        content: source,
+      })
+    : null;
 
   const namespace = `${this.resourcePath
     .replace(this.rootContext, '')
