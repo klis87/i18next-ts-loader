@@ -2,6 +2,7 @@
 // import { validate } from 'schema-utils';
 // const { stringifyRequest } = require('loader-utils');
 const fs = require('fs');
+const crypto = require('crypto');
 const path = require('path');
 // const schema = {
 // type: 'object',
@@ -25,43 +26,46 @@ function plugin(source) {
   //   baseDataPath: 'options',
   // });
 
+  const hashSum =
+    this.mode === 'production'
+      ? crypto.createHash('sha256').update(source).digest('hex')
+      : null;
+
   const json = JSON.parse(source);
 
   const languages = Object.keys(json);
 
-  const relativePath = this.resourcePath
+  const namespace = `${this.resourcePath
     .replace(this.rootContext, '')
     .slice(1)
     .replace('.i18n', '')
-    .replaceAll('/', '_');
+    .replaceAll('/', '_')}${hashSum ? `_${hashSum}` : ''}`;
 
-  const i18nTypes = getI18nTypes(json[languages[0]], `${relativePath}:`);
+  const i18nTypes = getI18nTypes(json[languages[0]], `${namespace}:`);
 
   fs.writeFileSync(
     `${this.resourcePath}.d.ts`,
     `declare const locales = ${JSON.stringify(
       i18nTypes,
     )} as const;export default locales;
-    export const namespace = '${relativePath}' as const;
+    export const namespace = '${namespace}' as const;
     `,
   );
 
   languages.forEach((language) => {
     fs.mkdirSync(
-      path.dirname(
-        `${this.rootContext}/locales/${language}/${relativePath}.json`,
-      ),
+      path.dirname(`${this.rootContext}/locales/${language}/${namespace}.json`),
       { recursive: true },
     );
     fs.writeFileSync(
-      `${this.rootContext}/locales/${language}/${relativePath}.json`,
+      `${this.rootContext}/locales/${language}/${namespace}.json`,
       JSON.stringify(json[language]),
     );
   });
 
   return `export default ${JSON.stringify(
     i18nTypes,
-  )};export const namespace = '${relativePath}'`;
+  )};export const namespace = '${namespace}'`;
 }
 
 module.exports = plugin;
