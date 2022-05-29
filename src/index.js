@@ -8,6 +8,7 @@ function plugin(source) {
   const {
     localeFilesPattern = '/locales/{{lng}}/{{ns}}.json',
     addContentHash = this.mode === 'production',
+    basePath = '',
   } = this.getOptions();
 
   const hashSum = addContentHash
@@ -19,6 +20,7 @@ function plugin(source) {
   const namespace = `${this.resourcePath
     .replace(this.rootContext, '')
     .slice(1)
+    .replace(basePath, '')
     .replace('.i18n', '')
     .replaceAll('/', '_')}${hashSum ? `_${hashSum}` : ''}`;
   const json = JSON.parse(source);
