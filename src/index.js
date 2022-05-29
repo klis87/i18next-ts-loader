@@ -15,7 +15,8 @@ const path = require('path');
 const { getI18nTypes, getLocalePath } = require('./utils');
 
 function plugin(source) {
-  // const options = this.getOptions();
+  const { localeFilesPattern = '/locales/{{lng}}/{{ns}}.json' } =
+    this.getOptions();
 
   // validate(schema, options, {
   //   name: 'Example Loader',
@@ -50,7 +51,7 @@ function plugin(source) {
   );
 
   languages.forEach((language) => {
-    const localePath = getLocalePath(language, namespace);
+    const localePath = getLocalePath(language, namespace, localeFilesPattern);
 
     fs.mkdirSync(path.dirname(this.rootContext + localePath), {
       recursive: true,
