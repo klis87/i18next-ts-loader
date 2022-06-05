@@ -1,2 +1,4 @@
-.gitignore
 examples
+.gitignore
+.prettierrc
+jsconfig.json
