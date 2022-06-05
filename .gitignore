@@ -1,1 +1,5 @@
 node_modules
+*.json
+locales
+*.i18n.d.ts
+dist
