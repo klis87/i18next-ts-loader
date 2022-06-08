@@ -100,6 +100,32 @@ with this plugin, `namespace` is nothing else than a path to your locale file, i
 content based hashing feature, it will be also appended to the `namespace` name. So, wherever you need to pass a namespace name,
 like in `useTranslation`, you should always use imported `namespace` variable.
 
+## Nested keys
+
+This loader supports nested keys in locale files, for example if you have below translation:
+
+```json
+{
+  "en": {
+    "nested": {
+      "myKey": "my key"
+    }
+  },
+  "pl": {
+    "nested": {
+      "myKey": "mój klucz"
+    }
+  }
+}
+```
+
+you could then refer to those nested keys as `locale.nested.myKey`
+
+## Plurals
+
+This plugin is compatible with plural keys - for examples keys like `key_0`. It will strip plural suffixes from your keys,
+so generated types will be still correct.
+
 ## Loader options
 
 The loader has the following configuration options available, all of which are optional.
