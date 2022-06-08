@@ -2298,10 +2298,12 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-i18next-ts-loader@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/i18next-ts-loader/-/i18next-ts-loader-0.2.0.tgz#04473499e86afbda21c6a47cf5d50fccda346463"
-  integrity sha512-BHd+VFhqYPseLgTCOXzpbYCK4z9pkM8LBRsG+apY5PqqHVs6qXEgcCvDsqYTbSXYe7PUmYEkOGIdrVZMjtp0EQ==
+i18next-ts-loader@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/i18next-ts-loader/-/i18next-ts-loader-0.4.0.tgz#23a4417719de8a13a4e6fd71f58c82721011f630"
+  integrity sha512-Fcg533jeJM5w72xX/GfMorEGtQdvq7vLd7CS20BoeWTYpS+jVi9G/wjUtBdB5cdwloI09x8l6keBP9unhXE6eA==
+  dependencies:
+    loader-utils "3.2.0"
 
 i18next-xhr-backend@3.2.2:
   version "3.2.2"
@@ -2493,6 +2495,11 @@ loader-runner@^4.2.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-4.3.0.tgz#c1b4a163b99f614830353b16755e7149ac2314e1"
   integrity sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==
+
+loader-utils@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-3.2.0.tgz#bcecc51a7898bee7473d4bc6b845b23af8304d4f"
+  integrity sha512-HVl9ZqccQihZ7JM85dco1MvO9G+ONvxoGa9rkhzFsneGLKSUg1gJf9bWzhRhcvm2qChhWpebQhP44qxjKIUCaQ==
 
 loader-utils@^2.0.0:
   version "2.0.2"

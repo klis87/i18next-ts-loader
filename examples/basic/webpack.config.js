@@ -23,7 +23,7 @@ module.exports = {
       {
         test: /\.i18n$/,
         exclude: /node_modules/,
-        loader: '/home/klis87/projects/i18next-plugin/src/index.js',
+        loader: 'i18next-ts-loader',
         options: {
           basePath: 'src/',
           addContentHash: true,
