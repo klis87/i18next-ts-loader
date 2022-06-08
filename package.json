@@ -1,7 +1,7 @@
 {
   "name": "i18next-ts-loader",
-  "version": "0.2.0",
-  "description": "Webpack loader for i18next",
+  "version": "0.3.0",
+  "description": "Webpack loader for i18next with the best developer experience",
   "main": "src/index.js",
   "repository": "git@github.com:klis87/i18next-ts-loader.git",
   "author": "Konrad Lisiczynski <klisiczynski@gmail.com>",
