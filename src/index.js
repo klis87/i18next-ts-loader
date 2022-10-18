@@ -31,11 +31,9 @@ function plugin(source) {
 
   fs.writeFileSync(
     `${this.resourcePath}.d.ts`,
-    `declare const locales = ${JSON.stringify(
-      i18nTypes,
-    )} as const;export default locales;
-    export const namespace = '${namespace}' as const;
-    `,
+    `declare const locales = ${JSON.stringify(i18nTypes)} as const;
+export default locales;
+export const namespace = '${namespace}' as const;
   );
 
   languages.forEach((language) => {
@@ -50,9 +48,8 @@ function plugin(source) {
     );
   });
 
-  return `export default ${JSON.stringify(
-    i18nTypes,
-  )};export const namespace = '${namespace}'`;
+  return `export default ${JSON.stringify(i18nTypes)};
+export const namespace = '${namespace}'`;
 }
 
 module.exports = plugin;
