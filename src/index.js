@@ -22,7 +22,7 @@ function plugin(source) {
     .slice(1)
     .replace(basePath, '')
     .replace('.i18n', '')
-    .replaceAll('/', '_')}${hashSum ? `_${hashSum}` : ''}`;
+    .replaceAll(path.sep, '_')}${hashSum ? `_${hashSum}` : ''}`;
   const json = JSON.parse(source);
 
   const languages = Object.keys(json);
