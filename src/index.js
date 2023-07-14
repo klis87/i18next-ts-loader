@@ -39,13 +39,8 @@ export const namespace = '${namespace}' as const;`
   languages.forEach((language) => {
     const localePath = getLocalePath(language, namespace, localeFilesPattern);
 
-    fs.mkdirSync(path.dirname(this.rootContext + localePath), {
-      recursive: true,
-    });
-    fs.writeFileSync(
-      this.rootContext + localePath,
-      JSON.stringify(json[language]),
-    );
+    fs.mkdirSync(path.dirname(localePath), { recursive: true });
+    fs.writeFileSync(localePath, JSON.stringify(json[language]));
   });
 
   return `export default ${JSON.stringify(i18nTypes)};
