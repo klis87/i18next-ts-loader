@@ -1,5 +1,5 @@
 node_modules
-*.json
+locales/**/*.json
 locales
 *.i18n.d.ts
 dist
